@@ -1,0 +1,45 @@
+#include<algorithm>
+
+struct job
+{
+    int ddl,pft;
+};
+
+bool compare(job a, job b)
+{
+   	return a.pft<b.pft;
+}
+
+int jobScheduling(vector<vector<int>> &jobs)
+{
+    // Write your code here
+  	int n=jobs.size();
+    job a[n];
+    int maxDeadline=-1;
+    for(int i=0;i<jobs.size();i++)
+    {
+        a[i].ddl = jobs[i][0];
+        a[i].pft = jobs[i][1];
+        maxDeadline = max(maxDeadline,a[i].ddl);
+    }
+    
+   	bool flag[maxDeadline]={false};
+    sort(a,a+n,compare);
+    reverse(a,a+n);
+    int sum=0;
+    for(int i=0;i<n;i++)
+    {
+        for(int j=a[i].ddl-1;j>=0;j--)
+        {
+            if(flag[j]==false)
+            {
+                sum+=a[i].pft;
+                flag[j]=true;
+                break;
+            }
+        }
+    }
+    return sum;
+    
+    
+}
