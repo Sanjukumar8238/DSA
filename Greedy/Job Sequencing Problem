@@ -21,7 +21,7 @@ int jobScheduling(vector<vector<int>> &jobs)
         a[i].ddl = jobs[i][0];
         a[i].pft = jobs[i][1];
         maxDeadline = max(maxDeadline,a[i].ddl);
-    }
+    } 
     
    	bool flag[maxDeadline]={false};
     sort(a,a+n,compare);
