@@ -1,0 +1,37 @@
+#include<queue>
+int getMedian(vector<vector<int>> &matrix)
+{
+    // Write your code here.
+    int n=matrix.size();
+    int m=matrix[0].size();
+    
+    priority_queue < pair<int, pair<int,int>>, vector<pair<int, pair<int,int>>>, greater<pair<int,pair<int,int>>>> minHeap;
+    
+    for(int i=0;i<n;i++)
+        minHeap.push(make_pair(matrix[i][0], make_pair(i,0)));
+    int count=0;
+    int median;
+    while(true)
+    {
+        auto u=minHeap.top();
+        minHeap.pop();
+        count++;
+        if(count==(n*m)/2+1)
+        {
+            median = u.first;
+            break;
+        }
+        
+        int rowIndex = u.second.first;
+        int colIndex = u.second.second;
+        
+        if(colIndex!=m-1)
+        {
+            minHeap.push(make_pair(matrix[rowIndex][colIndex+1], make_pair(rowIndex,colIndex+1)));
+            
+        }
+        
+    }
+    return median;
+    
+}
