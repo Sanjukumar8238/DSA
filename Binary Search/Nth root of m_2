@@ -35,3 +35,7 @@ int getMedian(vector<vector<int>> &matrix)
     return median;
     
 }
+
+
+## For max heap ==  priority_queue<int> maxHeap;
+## For min heap ==  priority_queue<int,vector<int> , greater<int>> minHeap;
