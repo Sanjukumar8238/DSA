@@ -1,0 +1,43 @@
+https://leetcode.com/problems/course-schedule/
+
+class Solution {
+public:
+    
+    bool dfs(int v, vector<int> gr[], vector<int> &vis)
+    {
+        if(vis[v]==1)
+            return true;
+        vis[v]=-1;
+        
+        for(int child : gr[v])
+        {
+            if(vis[child]==-1 || !dfs(child,gr, vis))
+                return false;
+        }
+        
+        vis[v]=1;
+        return true;
+        
+    }
+    
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        
+        vector<int> vis (numCourses,0);
+        vector<int> gr[numCourses];
+        
+        for(auto u : prerequisites)
+        {
+            gr[u[1]].push_back(u[0]);
+        }
+        
+        
+        for(int i=0;i<numCourses;i++)
+        {
+            if(!dfs(i, gr, vis))
+                return false;
+        }
+        return true;
+        
+        
+    }
+};
