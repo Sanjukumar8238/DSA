@@ -1,0 +1,20 @@
+
+// USING SPARSE TABLE
+int solve(int l, int r){
+
+    int length=r-l+1;
+    int k=0;
+    while(pow(2,k+1)<=length){
+        k++;
+    }
+
+    return max(mat[l][k],mat[r-(1<<k)+1][k]);
+
+}
+
+// MAKING SPARSE TABLE
+        for(int j=1;j<17;j++){
+            for(int i=0;i<m;i++){
+                mat[i][j]=max(mat[i][j-1],mat[i+(1<<(j-1))][j-1]);
+            }
+        }
