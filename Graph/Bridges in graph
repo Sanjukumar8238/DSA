@@ -1,0 +1,26 @@
+void dfs(int node, int parent, int &timer, vector<int> &disc, vector<int> &low,
+        vector<vector<int>> &res, vector<int> g[],vector<bool> &vis){
+    
+    vis[node]=true;
+    disc[node]=low[node]=timer++;
+    
+    for(auto u : g[node]){
+        if(u==parent){
+            continue;
+        }
+        if(!vis[u]){
+            dfs(u,node,timer,disc,low,res,g,vis);
+            low[node]=min(low[node],low[u]);
+            
+            if(low[u]>disc[node]){
+                vector<int> ans;
+                ans.push_back(node);
+                ans.push_back(u);
+                res.push_back(ans);
+            }
+        }
+        else{
+            low[node]=min(low[node],disc[u]);
+        }
+    }
+}
