@@ -1,0 +1,28 @@
+void dfs(int node, int parent, vector<int> &disc, vector<int> &low,vector<bool> &vis, vector<int> g[], vector<bool> &ap, int timer){
+
+    vis[node]=true;
+    disc[node]=low[node]=timer++;
+    int child=0;
+    for(auto nbr : g[node]){
+        if(nbr==parent){
+            continue;
+        }
+        if(!vis[nbr]){
+            dfs(nbr,node,disc,low,vis,g,ap,timer);
+            low[node]=min(low[node],low[nbr]);
+
+            if(low[nbr]>=disc[node] && parent!=-1){
+                ap[node]=true;
+            }
+            child++;
+        }
+        else{
+            low[node]=min(low[node],disc[nbr]);
+        }
+    }
+
+    if(parent==-1 && child >1){
+        ap[node]=true;
+    }
+
+}
