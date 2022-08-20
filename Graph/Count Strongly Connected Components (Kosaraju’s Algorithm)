@@ -1,0 +1,56 @@
+// Steps-
+        1. Toplogical sort
+        2. Transpose of Graph
+        3. Run dfs according to values in stack
+//
+
+void dfs(int node, vector<bool> &vis, vector<int> g[], stack<int> &st){
+    vis[node]=true;
+    for(auto u : g[node]){
+        if(!vis[u]){
+            dfs(u,vis,g,st);
+        }
+    }
+    st.push(node);
+}
+void newdfs(int node, vector<bool> &vis, vector<int> g[]){
+    vis[node]=true;
+    for(auto u : g[node]){
+        if(!vis[u]){
+            newdfs(u,vis,g);
+        }
+    }
+}
+int stronglyConnectedComponents(int n, vector<vector<int>> &edges)
+{
+	// Write your code here.
+    vector<int> g[n],transpose[n];
+    for(int i=0;i<edges.size();i++){
+        int u=edges[i][0];
+        int v=edges[i][1];
+        g[u].push_back(v);
+        transpose[v].push_back(u);
+    }
+    stack<int> st;
+    vector<bool> vis(n,false);
+    for(int i=0;i<n;i++){
+        if(!vis[i]){
+            dfs(i,vis,g,st);
+        }
+        
+    }
+    for(int i=0;i<n;i++){
+        vis[i]=false;
+    }
+    
+    int cnt=0;
+    while(st.size()){
+        int top=st.top();
+        st.pop();
+        if(!vis[top]){
+            newdfs(top,vis,transpose);
+            cnt++;
+        }
+    }
+    return cnt;
+}
